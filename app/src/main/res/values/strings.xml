@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BookDuck</string>
+    <string name="new_user_sign_up">New User? <b>Sign Up</b></string>
 </resources>
