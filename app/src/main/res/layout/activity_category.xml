@@ -42,7 +42,7 @@
     </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/categoryEt"
+        android:id="@+id/categoryTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:hintEnabled="false"
@@ -51,6 +51,7 @@
         android:layout_marginTop="225dp">
         
         <EditText
+            android:id="@+id/categoryEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_edittext01"
@@ -66,6 +67,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     
     <Button
+        android:id="@+id/submitBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -73,7 +75,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_button01"
         android:text="Submit"
-        android:layout_below="@+id/categoryEt"
+        android:layout_below="@+id/categoryTil"
         android:textColor="@color/white"/>
 
 </RelativeLayout>

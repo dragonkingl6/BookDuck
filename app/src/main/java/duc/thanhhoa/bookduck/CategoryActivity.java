@@ -1,14 +1,102 @@
 package duc.thanhhoa.bookduck;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+
+import duc.thanhhoa.bookduck.databinding.ActivityCategoryBinding;
 
 public class CategoryActivity extends AppCompatActivity {
+    private ActivityCategoryBinding binding;
+
+    private FirebaseAuth firebaseAuth;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
+        binding = ActivityCategoryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        //submit
+        binding.submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateData();
+            }
+        });
+    }
+
+    private String category = "";
+    private void validateData() {
+
+        category = binding.categoryEt.getText().toString().trim();
+
+        if (TextUtils.isEmpty(category)) {
+            binding.categoryEt.setError("Enter category");
+        } else {
+            addCategory();
+        }
+    }
+
+    private void addCategory() {
+        progressDialog.setMessage("Adding category...");
+        progressDialog.show();
+
+        long timestamp = System.currentTimeMillis();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", "" + timestamp);
+        hashMap.put("category", "" + category);
+        hashMap.put("timestamp", "" + timestamp);
+        hashMap.put("uid", "" + firebaseAuth.getUid());
+
+        //add to db
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Categories");
+        reference.child("" + timestamp)
+                .setValue(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressDialog.dismiss();
+                        Toast.makeText(CategoryActivity.this, "Category added...", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(CategoryActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 }
