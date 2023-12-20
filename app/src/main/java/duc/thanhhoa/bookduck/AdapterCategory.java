@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,16 +24,19 @@ import java.util.ArrayList;
 
 import duc.thanhhoa.bookduck.databinding.RowCategoryBinding;
 
-public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.HolderCategory> {
+public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.HolderCategory> implements Filterable {
 
     private Context context;
-    private ArrayList<ModelCategory> categoryList;
+    public ArrayList<ModelCategory> categoryList, filterList;
 
     private RowCategoryBinding binding;
+
+    private FilterCategory filter;
 
     public AdapterCategory(Context context, ArrayList<ModelCategory> categoryList) {
         this.context = context;
         this.categoryList = categoryList;
+        this.filterList = categoryList;
     }
 
     @NonNull
@@ -107,6 +112,14 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.Holder
     @Override
     public int getItemCount() {
         return categoryList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(filter == null){
+            filter= new FilterCategory(filterList, this);
+        }
+        return filter;
     }
 
     class HolderCategory extends RecyclerView.ViewHolder{
