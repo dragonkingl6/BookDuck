@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import duc.thanhhoa.bookduck.databinding.ActivityLoginBinding;
+
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;

@@ -9,6 +9,8 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import duc.thanhhoa.bookduck.databinding.ActivityDashboardUserBinding;
+
 public class DashboardUserActivity extends AppCompatActivity {
 
     private ActivityDashboardUserBinding binding;

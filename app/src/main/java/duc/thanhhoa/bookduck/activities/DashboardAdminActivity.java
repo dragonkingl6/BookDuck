@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import duc.thanhhoa.bookduck.adapter.AdapterCategory;
+import duc.thanhhoa.bookduck.databinding.ActivityDashboardAdminBinding;
 import duc.thanhhoa.bookduck.model.ModelCategory;
 
 public class DashboardAdminActivity extends AppCompatActivity {

@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 
+import duc.thanhhoa.bookduck.databinding.ActivityRegisterBinding;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding binding;
