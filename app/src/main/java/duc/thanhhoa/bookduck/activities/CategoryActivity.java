@@ -1,4 +1,4 @@
-package duc.thanhhoa.bookduck;
+package duc.thanhhoa.bookduck.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

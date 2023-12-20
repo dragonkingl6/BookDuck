@@ -1,4 +1,4 @@
-package duc.thanhhoa.bookduck;
+package duc.thanhhoa.bookduck.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,6 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import duc.thanhhoa.bookduck.databinding.ActivityDashboardUserBinding;
 
 public class DashboardUserActivity extends AppCompatActivity {
 

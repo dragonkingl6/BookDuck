@@ -1,4 +1,4 @@
-package duc.thanhhoa.bookduck;
+package duc.thanhhoa.bookduck.model;
 
 public class ModelCategory {
     String id, category, uid;

@@ -1,4 +1,4 @@
-package duc.thanhhoa.bookduck;
+package duc.thanhhoa.bookduck.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Objects;
-
-import duc.thanhhoa.bookduck.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
 

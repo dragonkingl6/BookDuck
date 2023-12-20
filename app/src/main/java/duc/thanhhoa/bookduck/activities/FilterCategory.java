@@ -1,8 +1,11 @@
-package duc.thanhhoa.bookduck;
+package duc.thanhhoa.bookduck.activities;
 
 import android.widget.Filter;
 
 import java.util.ArrayList;
+
+import duc.thanhhoa.bookduck.adapter.AdapterCategory;
+import duc.thanhhoa.bookduck.model.ModelCategory;
 
 public class FilterCategory extends Filter {
     ArrayList<ModelCategory> categoryList;
