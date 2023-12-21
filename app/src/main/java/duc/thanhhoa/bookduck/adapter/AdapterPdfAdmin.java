@@ -2,7 +2,9 @@ package duc.thanhhoa.bookduck.adapter;
 
 import static duc.thanhhoa.bookduck.Constants.MAX_BYTES_PDF;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -49,12 +52,18 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
 
     private RowListAdminBinding binding;
 
+    private ProgressDialog progressDialog;
+
     private static final String TAG = "PDF_ADAPTER";
 
     public AdapterPdfAdmin(Context context, ArrayList<ModelPdf> pdfList) {
         this.context = context;
         this.pdfList = pdfList;
         this.filterList = pdfList;
+
+        progressDialog= new ProgressDialog(context);
+        progressDialog.setTitle("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @NonNull
@@ -82,6 +91,80 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
         loadPdfFromUrl(modelPdf, holder);
         loadPdfSize(modelPdf, holder);
 
+        binding.moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moreOptions(modelPdf, holder);
+            }
+        });
+
+    }
+
+    private void moreOptions(ModelPdf modelPdf, HolderPdfAdmin holder) {
+
+        String[] options= {"Edit", "Delete"};
+
+        AlertDialog.Builder builder= new AlertDialog.Builder(context);
+        builder.setTitle("Choose Action")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (i==0){
+                            //Edit
+                            Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (i==1){
+                            //Delete
+                            deletePdfBook(modelPdf, holder);
+                        }
+                    }
+                })
+                .show();
+    }
+
+    private void deletePdfBook(ModelPdf modelPdf, HolderPdfAdmin holder) {
+        String bookId= modelPdf.getId();
+        String bookUrl= modelPdf.getUrl();
+        String bookTitle= modelPdf.getTitle();
+
+        Log.e(TAG, "deletePdfBook: "+modelPdf.getId());
+        progressDialog.setMessage("Deleting...");
+        progressDialog.show();
+
+        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl);
+        ref.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Books");
+                        databaseReference.child(bookId)
+                                .removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(context, "Deleted Successfully...", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "onSuccess: "+e.getMessage());
+                                        progressDialog.dismiss();
+                                    }
+                                });
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 
     private void loadPdfSize(ModelPdf modelPdf, HolderPdfAdmin holder) {
