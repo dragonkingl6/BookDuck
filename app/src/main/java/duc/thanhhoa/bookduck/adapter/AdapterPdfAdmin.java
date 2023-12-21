@@ -103,6 +103,15 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(context, PdfEditActivity.class);
+                intent.putExtra("bookId", pdfId);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     private void moreOptions(ModelPdf modelPdf, HolderPdfAdmin holder) {

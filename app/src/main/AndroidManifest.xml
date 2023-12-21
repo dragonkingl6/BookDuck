@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".activities.PdfDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.PdfEditActivity"
             android:exported="false" />
         <activity
