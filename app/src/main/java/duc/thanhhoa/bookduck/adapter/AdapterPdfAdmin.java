@@ -5,6 +5,7 @@ import static duc.thanhhoa.bookduck.Constants.MAX_BYTES_PDF;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import duc.thanhhoa.bookduck.MyApplication;
+import duc.thanhhoa.bookduck.activities.PdfEditActivity;
 import duc.thanhhoa.bookduck.databinding.RowListAdminBinding;
 import duc.thanhhoa.bookduck.filter.FilterPdfAdmin;
 import duc.thanhhoa.bookduck.model.ModelPdf;
@@ -102,6 +104,10 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
 
     private void moreOptions(ModelPdf modelPdf, HolderPdfAdmin holder) {
 
+        String bookId= modelPdf.getId();
+        String bookUrl= modelPdf.getUrl();
+        String bookTitle= modelPdf.getTitle();
+
         String[] options= {"Edit", "Delete"};
 
         AlertDialog.Builder builder= new AlertDialog.Builder(context);
@@ -112,6 +118,9 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                         if (i==0){
                             //Edit
                             Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+                            Intent intent= new Intent(context, PdfEditActivity.class);
+                            intent.putExtra("bookId", bookId);
+                            context.startActivity(intent);
                         }
                         else if (i==1){
                             //Delete
