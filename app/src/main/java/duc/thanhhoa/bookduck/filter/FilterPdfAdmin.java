@@ -1,20 +1,22 @@
-package duc.thanhhoa.bookduck.activities;
+package duc.thanhhoa.bookduck.filter;
 
 import android.widget.Filter;
 
 import java.util.ArrayList;
 
 import duc.thanhhoa.bookduck.adapter.AdapterCategory;
+import duc.thanhhoa.bookduck.adapter.AdapterPdfAdmin;
 import duc.thanhhoa.bookduck.model.ModelCategory;
+import duc.thanhhoa.bookduck.model.ModelPdf;
 
-public class FilterCategory extends Filter {
-    ArrayList<ModelCategory> categoryList;
+public class FilterPdfAdmin extends Filter {
+    ArrayList<ModelPdf> categoryList;
 
-    AdapterCategory adapterCategory;
+    AdapterPdfAdmin adapterPdfAdmin;
 
-    public FilterCategory(ArrayList<ModelCategory> categoryList, AdapterCategory adapterCategory) {
+    public FilterPdfAdmin(ArrayList<ModelPdf> categoryList, AdapterPdfAdmin adapterPdfAdmin) {
         this.categoryList = categoryList;
-        this.adapterCategory = adapterCategory;
+        this.adapterPdfAdmin = adapterPdfAdmin;
     }
 
     @Override
@@ -24,9 +26,9 @@ public class FilterCategory extends Filter {
         if(charSequence != null && charSequence.length() > 0){
             charSequence = charSequence.toString().toUpperCase();
 
-            ArrayList<ModelCategory> filteredModels = new ArrayList<>();
+            ArrayList<ModelPdf> filteredModels = new ArrayList<>();
             for (int i=0; i<categoryList.size(); i++){
-                if(categoryList.get(i).getCategory().toUpperCase().contains(charSequence)){
+                if(categoryList.get(i).getTitle().toUpperCase().contains(charSequence)){
                     filteredModels.add(categoryList.get(i));
                 }
             }
@@ -43,9 +45,9 @@ public class FilterCategory extends Filter {
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
 
-        adapterCategory.categoryList= (ArrayList<ModelCategory>) filterResults.values;
+        adapterPdfAdmin.pdfList= (ArrayList<ModelPdf>) filterResults.values;
 
-        adapterCategory.notifyDataSetChanged();
+        adapterPdfAdmin.notifyDataSetChanged();
 
     }
 }
