@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import duc.thanhhoa.bookduck.MyApplication;
+import duc.thanhhoa.bookduck.activities.PdfDetailActivity;
 import duc.thanhhoa.bookduck.activities.PdfEditActivity;
 import duc.thanhhoa.bookduck.databinding.RowListAdminBinding;
 import duc.thanhhoa.bookduck.filter.FilterPdfAdmin;
@@ -106,7 +107,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(context, PdfEditActivity.class);
+                Intent intent= new Intent(context, PdfDetailActivity.class);
                 intent.putExtra("bookId", pdfId);
                 context.startActivity(intent);
             }

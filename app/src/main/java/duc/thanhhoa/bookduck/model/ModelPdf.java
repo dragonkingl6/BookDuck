@@ -3,6 +3,8 @@ package duc.thanhhoa.bookduck.model;
 public class ModelPdf {
     String uid, id, title, description, categoryId, url, timestamp, viewCount, downloadCount;
 
+
+
     public ModelPdf() {
     }
 

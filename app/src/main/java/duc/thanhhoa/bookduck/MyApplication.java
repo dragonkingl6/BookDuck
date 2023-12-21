@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 import duc.thanhhoa.bookduck.adapter.AdapterPdfAdmin;
@@ -194,6 +195,46 @@ public class MyApplication extends Application {
                         String category= ""+snapshot.child("category").getValue();
                         categoryTv.setText(category);
 
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    public static void voidViewCount(String bookId){
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Books");
+        ref.child(bookId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String views= ""+snapshot.child("viewCount").getValue();
+                        if (views.equals("") ||views.equals("null")){
+                            views= "0";
+                        }
+
+                        long newViews= Long.parseLong(views)+1;
+
+                        HashMap<String, Object> hashMap= new HashMap<>();
+                        hashMap.put("viewCount", ""+newViews);
+
+                        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Books");
+                        ref.child(bookId)
+                                .updateChildren(hashMap)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.e("TAG", "onSuccess: ");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("TAG", "onFailure: "+e.getMessage());
+                                    }
+                                });
                     }
 
                     @Override
