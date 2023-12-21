@@ -1,12 +1,12 @@
 package duc.thanhhoa.bookduck.model;
 
 public class ModelPdf {
-    String uid, id, title, description, categoryId, url, timestamp;
+    String uid, id, title, description, categoryId, url, timestamp, viewCount, downloadCount;
 
     public ModelPdf() {
     }
 
-    public ModelPdf(String uid, String id, String title, String description, String categoryId, String url, String timestamp) {
+    public ModelPdf(String uid, String id, String title, String description, String categoryId, String url, String timestamp, String viewCount, String downloadCount) {
         this.uid = uid;
         this.id = id;
         this.title = title;
@@ -14,6 +14,8 @@ public class ModelPdf {
         this.categoryId = categoryId;
         this.url = url;
         this.timestamp = timestamp;
+        this.viewCount = viewCount;
+        this.downloadCount = downloadCount;
     }
 
     public String getUid() {
@@ -70,5 +72,21 @@ public class ModelPdf {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(String viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public String getDownloadCount() {
+        return downloadCount;
+    }
+
+    public void setDownloadCount(String downloadCount) {
+        this.downloadCount = downloadCount;
     }
 }
